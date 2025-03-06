@@ -112,3 +112,13 @@ Route::get('/login', function () {
 
 //Controller
 Route::get('/profil', [ProfileController::class, 'index']);
+
+//acara 6
+Route::get('/dashboard', [ProfileController::class, 'index']);
+// Route::get("/dashboard", function(){
+//     return view('dashboard');
+// });
+
+Route::get('/template', function () {
+    return view('frontend.layouts.template');
+}); 
