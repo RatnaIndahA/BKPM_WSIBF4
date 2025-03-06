@@ -122,3 +122,6 @@ Route::get('/dashboard', [ProfileController::class, 'index']);
 Route::get('/template', function () {
     return view('frontend.layouts.template');
 }); 
+Route::group(['namespace'=>'Backend'], function () {
+    Route::resource('dashboard', 'DashboardController');
+}); 
