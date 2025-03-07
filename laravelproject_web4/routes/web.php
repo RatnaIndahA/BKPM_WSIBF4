@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Acontroller;
 use App\Http\Controllers\ProfileController; 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PengalamanKerjaController;
+
 
 //route dasar menampilkan view
 // Route::get('/', function () {
@@ -74,41 +78,41 @@ use App\Http\Controllers\ProfileController;
 // Route::get('user/{id}/{name}', function($id,$name){
 //     //
 // })->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
-Route::prefix('/user')->group(function(){
+// Route::prefix('/user')->group(function(){
 
-    Route::get('/pendaftaran',function(){
-        return 'HALAMAN PENDAFTARAN';
-    })->name('mhs.pendaftaran');
+//     Route::get('/pendaftaran',function(){
+//         return 'HALAMAN PENDAFTARAN';
+//     })->name('mhs.pendaftaran');
 
-    Route::get('/profile',function(){
-        return 'HALAMAN PROFILE';
-    })->name('mhs.profile');
+//     Route::get('/profile',function(){
+//         return 'HALAMAN PROFILE';
+//     })->name('mhs.profile');
 
-    Route::get('/nilai',function(){
-        return 'HALAMAN NILAI';
-    })->name('mhs.nilai');
-});
-Route::group(['prefix' => '/mahasiswa', 'as' => 'mhs.', 'middleware'=>"auth"],function(){
+//     Route::get('/nilai',function(){
+//         return 'HALAMAN NILAI';
+//     })->name('mhs.nilai');
+// });
+// Route::group(['prefix' => '/mahasiswa', 'as' => 'mhs.', 'middleware'=>"auth"],function(){
 
-    Route::get('/pendaftaran',function(){
-        return 'HALAMAN PENDAFTARAN';
-    })->name('pendaftaran');
+//     Route::get('/pendaftaran',function(){
+//         return 'HALAMAN PENDAFTARAN';
+//     })->name('pendaftaran');
 
-    Route::get('/profile',function(){
-        return 'HALAMAN PROFILE';
-    })->name('profile');
+//     Route::get('/profile',function(){
+//         return 'HALAMAN PROFILE';
+//     })->name('profile');
 
-    Route::get('/nilai',function(){
-        return 'HALAMAN NILAI';
-    })->name('nilai');
-});
-Route::get('/home', function () {
-    return view('home');
-}); 
+//     Route::get('/nilai',function(){
+//         return 'HALAMAN NILAI';
+//     })->name('nilai');
+// });
+// Route::get('/home', function () {
+//     return view('home');
+// }); 
 
-Route::get('/login', function () {
-    return 'ANDA BELUM LOGIN';
-})->name('login');
+// Route::get('/login', function () {
+//     return 'ANDA BELUM LOGIN';
+// })->name('login');
 
 //Controller
 Route::get('/profil', [ProfileController::class, 'index']);
@@ -125,11 +129,22 @@ Route::get('/template', function () {
 Route::group(['namespace'=>'Backend'], function () {
     Route::resource('dashboard', 'DashboardController');
 }); 
-// Auth::routes();
+Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     });
+// });
+// Route::get('/login', function () {
+//     return view('auth.login');
+// })->name('login');
+// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+// Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/pengalaman', [PengalamanKerjaController::class, 'index'])->name('pengalaman.index');
+Route::get('/pengalaman/create', [PengalamanKerjaController::class, 'create'])->name('pengalaman.create');
+Route::post('/pengalaman', [PengalamanKerjaController::class, 'store'])->name('pengalaman.store');
+Route::get('/pengalaman/{id}/edit', [PengalamanKerjaController::class, 'edit'])->name('pengalaman.edit');
+Route::put('/pengalaman/{id}', [PengalamanKerjaController::class, 'update'])->name('pengalaman.update');
+Route::delete('/pengalaman/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman.destroy');
