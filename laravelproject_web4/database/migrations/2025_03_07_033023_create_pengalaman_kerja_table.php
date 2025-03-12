@@ -7,12 +7,11 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('pengalaman_kerja', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_perusahaan');
-            $table->string('posisi');
-            $table->text('deskripsi')->nullable();
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai')->nullable();
+            $table->bigIncrements('id');
+            $table->string('nama');
+            $table->string('jabatan');
+            $table->year('tahun_masuk');
+            $table->year('tahun_keluar');
             $table->timestamps();
         });
     }

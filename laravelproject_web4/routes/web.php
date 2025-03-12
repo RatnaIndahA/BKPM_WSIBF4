@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Acontroller;
 use App\Http\Controllers\ProfileController; 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\PengalamanKerjaController;
+use App\Http\Controllers\backend\DashboardController;
+use App\Http\Controllers\backend\PengalamanKerjaController;
 
 
 //route dasar menampilkan view
@@ -126,9 +127,8 @@ Route::get('/dashboard', [ProfileController::class, 'index']);
 Route::get('/template', function () {
     return view('frontend.layouts.template');
 }); 
-Route::group(['namespace'=>'Backend'], function () {
-    Route::resource('dashboard', 'DashboardController');
-}); 
+// Route::group(['namespace'=>'Backend'], function () {
+    Route::resource('dashboard', DashboardController::class);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -142,9 +142,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // })->name('login');
 // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-Route::get('/pengalaman', [PengalamanKerjaController::class, 'index'])->name('pengalaman.index');
-Route::get('/pengalaman/create', [PengalamanKerjaController::class, 'create'])->name('pengalaman.create');
-Route::post('/pengalaman', [PengalamanKerjaController::class, 'store'])->name('pengalaman.store');
-Route::get('/pengalaman/{id}/edit', [PengalamanKerjaController::class, 'edit'])->name('pengalaman.edit');
-Route::put('/pengalaman/{id}', [PengalamanKerjaController::class, 'update'])->name('pengalaman.update');
-Route::delete('/pengalaman/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman.destroy');
+// Route::get('/pengalaman', [PengalamanKerjaController::class, 'index'])->name('pengalaman.index');
+// Route::get('/pengalaman/create', [PengalamanKerjaController::class, 'create'])->name('pengalaman.create');
+// Route::post('/pengalaman', [PengalamanKerjaController::class, 'store'])->name('pengalaman.store');
+// Route::get('/pengalaman/{id}/edit', [PengalamanKerjaController::class, 'edit'])->name('pengalaman.edit');
+// Route::put('/pengalaman/{id}', [PengalamanKerjaController::class, 'update'])->name('pengalaman.update');
+// Route::delete('/pengalaman/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman.destroy');
+// Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::group(['namespace' => 'App\Http\Controllers\backend'], function() 
+{
+    Route::resource('dashboard', 'DashboardController');
+    Route::resource('pendidikan', 'PendidikanController');
+    Route::resource('pengalaman_kerja', PengalamanKerjaController::class);
+});
