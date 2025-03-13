@@ -93,4 +93,5 @@ class PengalamanKerjaController extends Controller
     // Redirect dengan pesan sukses
     return redirect()->route('pengalaman_kerja.index')->with('success', 'Data pengalaman kerja berhasil dihapus.');
 }
+
 }

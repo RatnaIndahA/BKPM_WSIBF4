@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\PengalamanKerjaController;
+use App\Http\Controllers\backend\PendidikanController;
 
 
 //route dasar menampilkan view
@@ -152,8 +153,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['namespace' => 'App\Http\Controllers\backend'], function() 
 {
     Route::resource('dashboard', 'DashboardController');
-    Route::resource('pendidikan', 'PendidikanController');
+    Route::resource('pendidikan', PendidikanController::class);
     Route::resource('pengalaman_kerja', PengalamanKerjaController::class);
     Route::delete('/pengalaman-kerja/{id}', [PengalamanKerjaController::class, 'destroy'])
     ->name('pengalaman_kerja.destroy');
+    Route::get('/pendidikan/{id}/edit', [PendidikanController::class, 'edit'])->name('pendidikan.edit');
+    Route::delete('/pendidikan/{id}', [PendidikanController::class, 'destroy'])
+    ->name('pendidikan.destroy');
 });
