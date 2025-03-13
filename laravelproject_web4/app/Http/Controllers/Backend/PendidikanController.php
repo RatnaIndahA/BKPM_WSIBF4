@@ -3,33 +3,37 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Pendidikan; // Pastikan model sudah diimport
 
-class PengalamanKerjaController extends Controller
+class PendidikanController extends Controller
 {
     public function index()
     {
-        return view('backend.pengalaman_kerja.index');
+        $pendidikan = Pendidikan::get();
+        return view('backend.pendidikan.index',compact('pendidikan'));
     }
 
     public function create()
     {
-        $pengalaman_kerja = null;
-        return view('backend.pengalaman_kerja.create', compact('pengalaman_kerja'));
+        $pendidikan = null;
+        return view('backend.pendidikan.create', compact('pendidikan'));
     }
 
     public function store(Request $request)
     {
-        DB::table('pengalaman_kerja')->insert([
-            'nama' => $request->nama,
-            'jabatan' => $request->jabatan,
-            'tahun_masuk' => $request->tahun_masuk,
-            'tahun_keluar' => $request->tahun_keluar
+        // Validasi input
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'tingkatan' => 'required|string|max:50',
+            'tahun_masuk' => 'required|integer',
+            'tahun_lulus' => 'nullable|integer|gte:tahun_masuk',
         ]);
 
-        return redirect()->route('pengalaman_kerja.index')
-            ->with('success', 'Data pengalaman_kerja baru telah berhasil disimpan.');
+        // Simpan ke database
+        Pendidikan::create($request->all());
+
+        return redirect()->route('pendidikan.index')
+            ->with('success', 'Data Pendidikan baru telah berhasil disimpan.');
     }
 }
-
