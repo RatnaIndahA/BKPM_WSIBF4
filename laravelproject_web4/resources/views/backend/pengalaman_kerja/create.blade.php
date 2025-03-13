@@ -49,14 +49,10 @@
                                     <input class="form-control" id="posisi" name="posisi" minlength="2" type="text" required />
                                     </div>
                                     </div>
-                                     <div class="form-group">
-                                         <label for="cname" class="control-label col-lg-2">Deskripsi<span
-                                                 class="required">*</span></label>
-                                         <div class="col-lg-10">
-                                             <input class="form-control" id="deskripsi" name="deskripsi" minlength="2"
-                                                 type="text" required />
-                                         </div>
-                                     </div>
+                                    <div class="form-group">
+                                    <label>Deskripsi</label>
+                                    <textarea class="form-control" name="deskripsi" rows="3" required>{{ old('deskripsi') }}</textarea>
+                                    </div>
                                      <div class="form-group">
                                     <label for="tanggal_mulai" class="control-label col-lg-2">Tanggal Mulai <span class="required">*</span></label>
                                     <div class="col-lg-10">

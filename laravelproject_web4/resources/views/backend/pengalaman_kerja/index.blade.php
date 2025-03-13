@@ -1,4 +1,4 @@
-@extends('backend/layouts.template')
+@extends('backend.layouts.template')
 
 @section('content')
     <section id="main-content">
@@ -20,39 +20,45 @@
                     <section class="panel">
                         <header class="panel-heading"> Pengalaman Kerja</header>
                         <div class="panel-body">
-                            @if ($message = Session::get('success'))
+                            @if (Session::has('success'))
                                 <div class="alert alert-success">
-                                    <p>{{ $message }}</p>
+                                    <p>{{ Session::get('success') }}</p>
                                 </div>
                             @endif
-                            <a href="{{ route('pengalaman_kerja.create') }}">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fa fa-plus"></i> Tambah
-                                </button>
+                            
+                            <a href="{{ route('pengalaman_kerja.create') }}" class="btn btn-primary">
+                                <i class="fa fa-plus"></i> Tambah
                             </a>
 
                             <!-- Tabel Pengalaman Kerja -->
                             <table class="table table-striped table-advance table-hover mt-3">
-                                <tbody>
+                                <thead>
                                     <tr>
                                         <th><i class="icon_bag"></i> Nama Perusahaan</th>
                                         <th><i class="icon_document"></i> Posisi</th>
+                                        <th><i class="icon_document"></i> Deskripsi</th>
                                         <th><i class="icon_calendar"></i> Tanggal Mulai</th>
                                         <th><i class="icon_calendar"></i> Tanggal Selesai</th>
                                         <th><i class="icon_cogs"></i> Action</th>
                                     </tr>
-
+                                </thead>
+                                <tbody>
                                     @foreach ($pengalaman_kerja as $item)
                                         <tr>
                                             <td>{{ $item->nama_perusahaan }}</td>
                                             <td>{{ $item->posisi }}</td>
+                                            <td>{{ $item->deskripsi }}</td>
                                             <td>{{ $item->tanggal_mulai }}</td>
-                                            <td>{{ $item->tanggal_selesai }}</td>
+                                            <td>{{ $item->tanggal_selesai ?? '-' }}</td>
                                             <td>
                                                 <div class="btn-group">
+                                                    
+                                                    <!-- Tombol Edit -->
                                                     <a href="{{ route('pengalaman_kerja.edit', $item->id) }}" class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
+
+                                                    <!-- Tombol Hapus -->
                                                     <form action="{{ route('pengalaman_kerja.destroy', $item->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
@@ -64,7 +70,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
 

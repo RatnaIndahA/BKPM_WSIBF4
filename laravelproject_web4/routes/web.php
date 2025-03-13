@@ -154,4 +154,6 @@ Route::group(['namespace' => 'App\Http\Controllers\backend'], function()
     Route::resource('dashboard', 'DashboardController');
     Route::resource('pendidikan', 'PendidikanController');
     Route::resource('pengalaman_kerja', PengalamanKerjaController::class);
+    Route::delete('/pengalaman-kerja/{id}', [PengalamanKerjaController::class, 'destroy'])
+    ->name('pengalaman_kerja.destroy');
 });
