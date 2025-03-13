@@ -20,9 +20,12 @@ class PegawaiController extends Controller
     }
     
     public function proses(Request $request){
-        $nama = $request->input('nama');
-        $alamat = $request->input('alamat');
-    
-        return "Nama : ".$nama.", Alamat : ".$alamat;
+        // Tambahkan validasi
+        $request->validate([
+            'nama' => 'required|min:3|max:20',
+            'alamat' => 'required|string',
+        ]);
+
+        return "Nama: " . $request->nama . ", Alamat: " . $request->alamat;
     }
 }
