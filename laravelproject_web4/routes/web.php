@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\PengalamanKerjaController;
 use App\Http\Controllers\backend\PendidikanController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\PegawaiController;
 
 
 //route dasar menampilkan view
@@ -161,3 +163,9 @@ Route::group(['namespace' => 'App\Http\Controllers\backend'], function()
     Route::delete('/pendidikan/{id}', [PendidikanController::class, 'destroy'])
     ->name('pendidikan.destroy');
 });
+Route::get('/session', [SessionController::class, 'create']);
+Route::get('/session/show', [SessionController::class, 'show']);
+Route::get('/session/delete', [SessionController::class, 'delete']);
+Route::get('/pegawai/{nama}', [PegawaiController::class, 'index']);
+Route::get('/formulir', [PegawaiController::class, 'formulir']);
+Route::post('/formulir/proses', [PegawaiController::class, 'proses']);
