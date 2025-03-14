@@ -112,13 +112,13 @@ use App\Http\Controllers\UploadController;
 //         return 'HALAMAN NILAI';
 //     })->name('nilai');
 // });
-// Route::get('/home', function () {
-//     return view('home');
-// }); 
+Route::get('/home', function () {
+    return view('home');
+}); 
 
-// Route::get('/login', function () {
-//     return 'ANDA BELUM LOGIN';
-// })->name('login');
+Route::get('/login', function () {
+    return 'ANDA BELUM LOGIN';
+})->name('login');
 
 //Controller
 Route::get('/profil', [ProfileController::class, 'index']);
@@ -142,9 +142,9 @@ Route::get('/home', [App\Http\Controllers\frontend\HomeController::class, 'index
 //         return view('dashboard');
 //     });
 // });
-// Route::get('/login', function () {
-//     return view('auth.login');
-// })->name('login');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 // Route::get('/pengalaman', [PengalamanKerjaController::class, 'index'])->name('pengalaman.index');

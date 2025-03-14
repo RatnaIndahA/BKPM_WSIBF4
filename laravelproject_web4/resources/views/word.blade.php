@@ -15,7 +15,7 @@
                 <h3>Selamat Datang</h3>
             </div>
             <div class="card-body">
-                <p>Angga Prasetio </p>
+                <p>Ratna Indah Anggraini</p>
                 <button class="btn btn-success">Klik</button>
             </div>
         </div>
