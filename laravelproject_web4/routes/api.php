@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\ApiPendidikanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+// Menggunakan FQCN untuk Laravel 8+
+Route::prefix('api_pendidikan')->group(function () {
+    Route::get('/', [ApiPendidikanController::class, 'getAll']);
+    Route::get('/{id}', [ApiPendidikanController::class, 'getPen']);
+    Route::post('/', [ApiPendidikanController::class, 'createPen']);
+    Route::put('/{id}', [ApiPendidikanController::class, 'updatePen']);
+    Route::delete('/{id}', [ApiPendidikanController::class, 'deletePen']);
 });
