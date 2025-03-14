@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Acontroller;
-use App\Http\Controllers\ProfileController; 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\PengalamanKerjaController;
@@ -131,12 +131,12 @@ Route::get('/dashboard', [ProfileController::class, 'index']);
 
 Route::get('/template', function () {
     return view('frontend.layouts.template');
-}); 
+});
 // Route::group(['namespace'=>'Backend'], function () {
-    Route::resource('dashboard', DashboardController::class);
+Route::resource('dashboard', DashboardController::class);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\frontend\HomeController::class, 'index'])->name('home');
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/dashboard', function () {
 //         return view('dashboard');
@@ -154,16 +154,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::put('/pengalaman/{id}', [PengalamanKerjaController::class, 'update'])->name('pengalaman.update');
 // Route::delete('/pengalaman/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman.destroy');
 // Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::group(['namespace' => 'App\Http\Controllers\backend'], function() 
-{
-    Route::resource('dashboard', 'DashboardController');
-    Route::resource('pendidikan', PendidikanController::class);
-    Route::resource('pengalaman_kerja', PengalamanKerjaController::class);
-    Route::delete('/pengalaman-kerja/{id}', [PengalamanKerjaController::class, 'destroy'])
-    ->name('pengalaman_kerja.destroy');
-    Route::get('/pendidikan/{id}/edit', [PendidikanController::class, 'edit'])->name('pendidikan.edit');
-    Route::delete('/pendidikan/{id}', [PendidikanController::class, 'destroy'])
-    ->name('pendidikan.destroy');
+Route::group(['namespace' => 'App\Http\Controllers\backend'], function () {
+Route::resource('dashboard', 'DashboardController');
+Route::resource('pendidikan', PendidikanController::class);
+Route::resource('pengalaman_kerja', PengalamanKerjaController::class);
+Route::delete('/pengalaman-kerja/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman_kerja.destroy');
+Route::get('/pendidikan/{id}/edit', [PendidikanController::class, 'edit'])->name('pendidikan.edit');
+Route::delete('/pendidikan/{id}', [PendidikanController::class, 'destroy'])->name('pendidikan.destroy');
 });
 Route::get('/session', [SessionController::class, 'create']);
 Route::get('/session/show', [SessionController::class, 'show']);
