@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File Laravel</title>
+    <title>Upload Multiple Files - Laravel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Upload File Dengan Laravel</h2>
+        <h2 class="text-center">Upload Multiple Files Dengan Laravel</h2>
 
         {{-- Pesan Jika Success --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible">
-                <a href="#" class="close text-decoration-none" 
-                   data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="#" class="close text-decoration-none" data-dismiss="alert" aria-label="close">&times;</a>
                 {{ session('success') }}
             </div>
         @endif
@@ -22,8 +21,7 @@
         {{-- Peringatan Jika Error --}}
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible">
-                <a href="#" class="close text-decoration-none" 
-                   data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="#" class="close text-decoration-none" data-dismiss="alert" aria-label="close">&times;</a>
                 {{ session('error') }}
             </div>
         @endif
@@ -43,7 +41,7 @@
             
             <div class="form-group">
                 <label><b>File Gambar</b></label>
-                <input type="file" name="file" class="form-control">
+                <input type="file" name="file[]" class="form-control" multiple>
             </div>
 
             <div class="form-group">

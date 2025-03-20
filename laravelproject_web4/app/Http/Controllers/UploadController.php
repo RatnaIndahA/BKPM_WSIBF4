@@ -16,35 +16,23 @@ class UploadController extends Controller
     public function proses_upload(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required|mimes:jpg,jpeg,png,gif|max:2048',
+            'file.*' => 'required|mimes:jpg,jpeg,png,gif|max:2048',
             'keterangan' => 'required',
         ], [
-            'file.required' => 'File gambar wajib diunggah.',
-            'file.mimes' => 'Format file harus jpg, jpeg, png, atau gif.',
-            'file.max' => 'Ukuran file maksimal 2MB.',
+            'file.*.required' => 'File gambar wajib diunggah.',
+            'file.*.mimes' => 'Format file harus jpg, jpeg, png, atau gif.',
+            'file.*.max' => 'Ukuran file maksimal 2MB.',
             'keterangan.required' => 'Keterangan wajib diisi.'
         ]);
 
-        // Menyimpan data file yang diupload ke variabel $file
-        $file = $request->file('file');
-
-        // Informasi file
-        echo 'File Name: ' . $file->getClientOriginalName() . '<br>';
-        echo 'File Extension: ' . $file->getClientOriginalExtension() . '<br>';
-        echo 'File Real Path: ' . $file->getRealPath() . '<br>';
-        echo 'File Size: ' . $file->getSize() . '<br>';
-        echo 'File Mime Type: ' . $file->getMimeType();
-
-        // Folder tujuan upload
         $tujuan_upload = public_path('data_file');
-
-        // Jika folder belum ada, buat folder
         if (!File::isDirectory($tujuan_upload)) {
             File::makeDirectory($tujuan_upload, 0777, true);
         }
 
-        // Upload file
-        $file->move($tujuan_upload, $file->getClientOriginalName());
+        foreach ($request->file('file') as $file) {
+            $file->move($tujuan_upload, $file->getClientOriginalName());
+        }
 
         return back()->with('success', 'File berhasil diupload!');
     }
@@ -52,56 +40,55 @@ class UploadController extends Controller
     public function resize_upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'file.*' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
             'keterangan' => 'required',
         ]);
 
-        // Tentukan path lokasi upload
         $path = public_path('img/logo');
-
-        // Jika folder belum ada, buat foldernya
         if (!File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true);
         }
 
-        // Ambil file dari form
-        $file = $request->file('file');
-
-        // Buat nama file unik
-        $fileName = 'logo_' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-        // Resize dan crop gambar menggunakan Intervention Image
-        $image = Image::make($file->getRealPath())->fit(200, 200);
-
-        // Simpan hasil gambar ke folder
-        $image->save($path . '/' . $fileName);
+        foreach ($request->file('file') as $file) {
+            $fileName = 'logo_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $image = Image::make($file->getRealPath())->fit(200, 200);
+            $image->save($path . '/' . $fileName);
+        }
 
         return redirect()->route('upload')->with('success', 'Data berhasil ditambahkan!');
     }
+
     public function dropzone()
     {
-    return view('dropzone');
+        return view('dropzone');
     }
+
     public function dropzone_store(Request $request)
     {
-    $image = $request->file('file');
+        $imageNames = [];
+        foreach ($request->file('file') as $image) {
+            $imageName = time() . '_' . uniqid() . '.' . $image->extension();
+            $image->move(public_path('img/dropzone'), $imageName);
+            $imageNames[] = $imageName;
+        }
 
-    $imageName = time().'.'.$image->extension();
-    $image->move(public_path('img/dropzone'), $imageName);
-
-    return response()->json(['success' => $imageName]);
+        return response()->json(['success' => $imageNames]);
     }
+
     public function pdf_upload()
     {
-    return view('pdf_upload');
+        return view('pdf_upload');
     }
+
     public function pdf_store(Request $request)
     {
-    $pdf = $request->file('file');
+        $pdfNames = [];
+        foreach ($request->file('file') as $pdf) {
+            $pdfName = 'pdf_' . time() . '_' . uniqid() . '.' . $pdf->extension();
+            $pdf->move(public_path('pdf/dropzone'), $pdfName);
+            $pdfNames[] = $pdfName;
+        }
 
-    $pdfName = 'pdf_' . time() . '.' . $pdf->extension();
-    $pdf->move(public_path('pdf/dropzone'), $pdfName);
-
-    return response()->json(['success' => $pdfName]);
+        return response()->json(['success' => $pdfNames]);
     }
 }

@@ -120,59 +120,46 @@ Route::get('/login', function () {
     return 'ANDA BELUM LOGIN';
 })->name('login');
 
-//Controller
-Route::get('/profil', [ProfileController::class, 'index']);
 
-//acara 6
-Route::get('/dashboard', [ProfileController::class, 'index']);
-// Route::get("/dashboard", function(){
-//     return view('dashboard');
-// });
+Route::get('/profil', [ProfileController::class, 'index']);
 
 Route::get('/template', function () {
     return view('frontend.layouts.template');
 });
-// Route::group(['namespace'=>'Backend'], function () {
+
+Route::get('/login', function () { return view('auth.login'); })->name('login');
+Route::get('/dashboard', [ProfileController::class, 'index']);
 Route::resource('dashboard', DashboardController::class);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\frontend\HomeController::class, 'index'])->name('home');
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     });
-// });
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-// Route::get('/pengalaman', [PengalamanKerjaController::class, 'index'])->name('pengalaman.index');
-// Route::get('/pengalaman/create', [PengalamanKerjaController::class, 'create'])->name('pengalaman.create');
-// Route::post('/pengalaman', [PengalamanKerjaController::class, 'store'])->name('pengalaman.store');
-// Route::get('/pengalaman/{id}/edit', [PengalamanKerjaController::class, 'edit'])->name('pengalaman.edit');
-// Route::put('/pengalaman/{id}', [PengalamanKerjaController::class, 'update'])->name('pengalaman.update');
-// Route::delete('/pengalaman/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman.destroy');
-// Route::get('/dashboard', [DashboardController::class, 'index']);
+// Route::get('/home', [App\Http\Controllers\frontend\HomeController::class, 'index'])->name('home');
+
 Route::group(['namespace' => 'App\Http\Controllers\backend'], function () {
 Route::resource('dashboard', 'DashboardController');
 Route::resource('pendidikan', PendidikanController::class);
 Route::resource('pengalaman_kerja', PengalamanKerjaController::class);
+
 Route::delete('/pengalaman-kerja/{id}', [PengalamanKerjaController::class, 'destroy'])->name('pengalaman_kerja.destroy');
 Route::get('/pendidikan/{id}/edit', [PendidikanController::class, 'edit'])->name('pendidikan.edit');
 Route::delete('/pendidikan/{id}', [PendidikanController::class, 'destroy'])->name('pendidikan.destroy');
 });
+
 Route::get('/session', [SessionController::class, 'create']);
 Route::get('/session/show', [SessionController::class, 'show']);
 Route::get('/session/delete', [SessionController::class, 'delete']);
+
 Route::get('/pegawai/{nama}', [PegawaiController::class, 'index']);
 Route::get('/formulir', [PegawaiController::class, 'formulir']);
 Route::post('/formulir/proses', [PegawaiController::class, 'proses']);
+
 Route::get('/cobaerror/{nama}', [CobaController::class, 'index']);
+
 Route::get('/upload', [UploadController::class, 'upload'])->name('upload');
 Route::post('/upload/proses', [UploadController::class, 'proses_upload'])->name('upload.proses');
 Route::post('/upload/resize', [UploadController::class, 'resize_upload'])->name('upload.resize');
+
 Route::get('/dropzone', [UploadController::class, 'dropzone'])->name('dropzone');
 Route::post('/dropzone/store', [UploadController::class, 'dropzone_store'])->name('dropzone.store');
+
 Route::get('/pdf_upload', [UploadController::class, 'pdf_upload'])->name('pdf.upload');
 Route::post('/pdf/store', [UploadController::class, 'pdf_store'])->name('pdf.store');
